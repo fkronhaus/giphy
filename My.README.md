@@ -30,6 +30,11 @@ Asegúrate de tener instalado lo siguiente antes de iniciar la configuración de
 git clone https://github.com/fkronhaus/giphy
 ```
 
+2. Edita el archivo hosts
+Windows
+Linux/MacOs
+127.0.0.1       giphyapi.com
+
 2. Inicia el Contenedor
 ```
 docker-compose up

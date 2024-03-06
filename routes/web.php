@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\UserController;
+
+ 
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +18,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('login');
 });
+
+Route::get('/login', [UserController::class, 'login'])->name('login');
+Route::get('/google-login', [GoogleController::class, 'login'])->name('googleLogin');
+ 
+Route::get('/google-callback', [GoogleController::class, 'callback']);
