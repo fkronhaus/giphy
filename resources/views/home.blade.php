@@ -8,6 +8,28 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
+<nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Giphy API</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <!-- Aquí puedes agregar otros elementos de menú si es necesario -->
+    </ul>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <!-- Aquí puedes mostrar el nombre del usuario logueado -->
+        <span class="nav-link">Usuario: John Doe</span>
+      </li>
+      <li class="nav-item">
+        <!-- Menú para salir -->
+        <a class="nav-link cursor-pointer" id="web-logout" >Salir</a>
+      </li>
+    </ul>
+  </div>
+</nav>
 <div id="login" class="container mt-4 d-none" >
     <div class="row justify-content-center align-items-center">
         <div class="col-6">
@@ -26,7 +48,6 @@
                 <input type="password" class="form-control" placeholder="Password" id="password" required>
             </div>
             <button type="button" id="web-login" class="btn btn-primary">Iniciar Sesión</button>
-            <button type="button" id="web-logout" class="btn btn-primary">Cerrar Sesión</button>
 
             
         </div>
@@ -40,13 +61,11 @@
     </div>
 </div>
 <div id="search" class="d-none">
+
  Buscar
 </div>
 
 
-
-
-<!-- Agregar script de Bootstrap al final del cuerpo del documento para un mejor rendimiento -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
     function setCookie(value,minutes) {
@@ -69,7 +88,10 @@
         }
         return null;
     }
-
+    
+    function removeCookie(){
+        document.cookie = "giphyToken=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
+    }
 
     function showErrorMessage(message) {
         $('#errorMessage').text(message).removeClass('d-none');
@@ -81,12 +103,15 @@
     }
 
     function showLogin(){
+        
         $('#login').removeClass('d-none');
+        $('#navbar').addClass('d-none');
         $('#search').addClass('d-none');
     }
 
     function showSearch(){
         $('#login').addClass('d-none');
+        $('#navbar').removeClass('d-none');
         $('#search').removeClass('d-none');
     }
 
@@ -100,7 +125,7 @@
 
     $(document).ready(function() {
 
-        showLoginOrSearch();
+        
 
         $('#google-login').click(function() {
             window.location.href = '/google-login';
@@ -144,6 +169,7 @@
                 url: '{{route("logout")}}', 
                 method: 'POST', 
                 success: function(response) {
+                    removeCookie();
                     window.location.href = '/';
                 },
                 error: function(xhr, status, error) {
@@ -153,6 +179,8 @@
                 }
             });
         });
+
+        showLoginOrSearch();
     });
 </script>
 </body>

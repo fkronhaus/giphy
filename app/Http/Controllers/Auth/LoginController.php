@@ -7,9 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cookie;
-
-
 
 class LoginController extends Controller
 {
@@ -21,7 +18,6 @@ class LoginController extends Controller
             'logout', 'dashboard'
         ]);
 
-        $this->token =  Cookie::get('giphy_token');
     }
 
     public function home(){
@@ -45,10 +41,12 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             //guardar el token
 
-            $user = User::where('email', $credentials['email'])->first();
+            $user = User::where('email', $credentials['email'])
+                        ->where('access_type', 1)
+                        ->first();
             $token = $user->createToken("giphy", ["*"], Carbon::now()->addMinutes(30));
             $token = $token->plainTextToken;
-            Cookie::make("giphy_token", $token, 30);
+            
 
             return response()->json(['message' => 'Autenticacion exitosa', 'token'=> $token], 200);
         }else{
@@ -63,7 +61,7 @@ class LoginController extends Controller
         Auth::logout();
         // borrar el token
         //$this->user->tokens()->delete();
-        Cookie::forget('user-cookie');
+        
         return response()->json(['message' => 'Autenticacion exitosa'], 200);
     }    
 
