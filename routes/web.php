@@ -16,10 +16,14 @@ use App\Http\Controllers\Auth\LoginController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+/*
 Route::get('/', function () {
-    return view('login');
+
+    return view('home');
 });
+*/
+
+Route::get('/', [LoginController::class, 'home'])->name('home');
 
 
 
