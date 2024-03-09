@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GoogleController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Auth\LoginController;
 
  
 
@@ -21,7 +21,12 @@ Route::get('/', function () {
     return view('login');
 });
 
-Route::get('/login', [UserController::class, 'login'])->name('login');
+
+
 Route::get('/google-login', [GoogleController::class, 'login'])->name('googleLogin');
  
 Route::get('/google-callback', [GoogleController::class, 'callback']);
+
+
+
+
