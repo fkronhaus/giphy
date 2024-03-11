@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\GiphyController;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Middleware\EnsureTokenIsValid;
+
 
  
 
@@ -27,18 +27,10 @@ Route::get('/', function () {
 
 Route::get('/', [LoginController::class, 'home'])->name('home');
 
+Route::get('/google-login', [GoogleController::class, 'login'])->name('googleLogin');
 
-Route::middleware([EnsureTokenIsValid::class])->group(function () {
-    Route::get('/google-login', [GoogleController::class, 'login'])->name('googleLogin');
-    
-    Route::get('/google-callback', [GoogleController::class, 'callback']);
+Route::get('/google-callback', [GoogleController::class, 'callback']);
 
-    Route::get('/giphy/find', [GiphyController::class, 'find'])->name('giphy-find');
-
-    Route::get('/giphy/get', [GiphyController::class, 'get'])->name('giphy-get');
-
-    Route::get('/giphy/info/', [GiphyController::class, 'info'])->name('giphy-info');
-});
 
 
 

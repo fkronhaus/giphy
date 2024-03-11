@@ -21,7 +21,7 @@
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
         <!-- Aquí puedes mostrar el nombre del usuario logueado -->
-        <span class="nav-link" id="loggedUser"></span>
+        <span class="nav-link" id="loggedUser" user_id=""></span>
       </li>
       <li class="nav-item">
         <!-- Menú para salir -->
@@ -124,6 +124,7 @@
 
     $(document).ready(function() {
         $("#loggedUser").html(getCookie('username'));
+        $("#loggedUser").attr('user_id', getCookie('user_id'));
 
         <?php if (isset($_GET["expired"]) && $_GET["expired"]){ ?>
             showErrorMessage('Expiró la sesion, ingrese nuevamente');
@@ -152,6 +153,7 @@
                 success: function(response) {
                     setCookie('giphyToken',response.token, {{env('TOKEN_EXPIRATION_TIME')}});
                     setCookie('username', response.username, {{env('TOKEN_EXPIRATION_TIME')}});
+                    setCookie('user_id', response.user_id, {{env('TOKEN_EXPIRATION_TIME')}});
                     window.location.href = '/';
                 },
                 error: function(xhr, status, error) {

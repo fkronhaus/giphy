@@ -40,6 +40,10 @@
         $('#results').on('click', '.showInfoButton', function(){
             showGifInfo($(this));
         });
+
+        $('#results').on('click', '.setFavoriteButton', function(){
+            setFavoriteGif($(this));
+        });
     });
     
 
@@ -47,6 +51,39 @@
         $(obj).attr('src', '{{ asset('images/loading.gif') }}');
         $(obj).attr('src', $(obj).closest('.giphyContainer').attr('downsizedUrl'));
     }
+
+    function setFavoriteGif(obj){
+
+        let id = $(obj).attr('giphy-id');
+        let alias = $(obj).attr('alias');
+        let user_id = getCookie('user_id');
+
+        $.ajax({
+            headers: {
+                    'giphyToken' : getCookie('giphyToken')
+            },
+            url: '{{route("starred-add")}}', 
+            method: 'POST', 
+            data: { 
+                gif_id: id,
+                alias: alias,
+                user_id: user_id
+            },
+            success: function(response) {
+                alert('Añadido correctamente');
+            },
+            error: function(xhr, status, error) {
+                if (xhr.status == 419){
+                    console.log("Session expirada");
+                    window.location.href = '/?expired=1';
+                }else{
+                    var errorMessage = xhr.responseJSON.message || 'Ha ocurrido un error.';
+                    showErrorMessage(errorMessage);
+                }
+            }
+        });
+
+        }
 
     function showGifInfo(obj){
 
@@ -102,6 +139,12 @@
                             .attr('class', 'showInfoButton d-block')
                             .text('Mostrar info');
 
+            setFavoriteButton = $('<button>')
+                            .attr('giphy-id', gif.id)
+                            .attr('alias', gif.title)
+                            .attr('class', 'setFavoriteButton d-block')
+                            .text('Añadir a favoritos');
+
             titleRow = $('<div>').attr('class','row').html(
                 $('<div>').attr('class', 'col-12').html(
                     $('<label>').text(gif.title)
@@ -124,6 +167,7 @@
 
             leftCol.append(previewImage);
             leftCol.append(showInfoButton);
+            leftCol.append(setFavoriteButton);
 
             contentRow.append(leftCol);
 

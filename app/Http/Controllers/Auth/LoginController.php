@@ -19,7 +19,6 @@ class LoginController extends Controller
     public function home(Request $request){
         $userName = (Auth::user()) ? Auth::user()["name"] : "";
 
-
         return view('home', ['userName' => $userName]); 
 
     }
@@ -43,7 +42,7 @@ class LoginController extends Controller
             $token = $token->plainTextToken;
             
 
-            return response()->json(['message' => 'Autenticacion exitosa', 'token'=> $token, 'username' => $user["name"]], 200);
+            return response()->json(['message' => 'Autenticacion exitosa', 'token'=> $token, 'user_id' => $user["id"], 'username' => $user["name"]], 200);
         }else{
             return response()->json(['message' => 'Credenciales incorrectas' ], 401);
         }
