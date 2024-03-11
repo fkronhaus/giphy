@@ -21,11 +21,11 @@
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
         <!-- Aquí puedes mostrar el nombre del usuario logueado -->
-        <span class="nav-link">Usuario: John Doe</span>
+        <span class="nav-link" id="loggedUser"></span>
       </li>
       <li class="nav-item">
         <!-- Menú para salir -->
-        <a class="nav-link cursor-pointer" id="web-logout" >Salir</a>
+        <a class="nav-link" role="button" id="web-logout" >Salir</a>
       </li>
     </ul>
   </div>
@@ -40,7 +40,7 @@
     <div class="row justify-content-center align-items-center mt-4" >
 
         <div class="col-3 text-center">
-            <div id="errorMessage" class="alert alert-primary d-none" role="alert"></div>
+            <div id="errorMessage" class="alert alert-warning d-none" role="alert"> </div>
             <div class="form-group">
                 <input type="text" class="form-control" id="email" placeholder="Email" required>
             </div>
@@ -61,21 +61,20 @@
     </div>
 </div>
 <div id="search" class="d-none">
-
- Buscar
+@include('giphy/find')
 </div>
-
+@include('modal');
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
-    function setCookie(value,minutes) {
+    function setCookie(name,value,minutes) {
         var expires = "";
         if (minutes) {
             var date = new Date();
-            date.setTime(date.getTime() + (minutes*60*60*1000));
+            date.setTime(date.getTime() + (minutes*60*1000));
             expires = "; expires=" + date.toUTCString();
         }
-        document.cookie = "giphyToken=" + (value)  + expires + "; path=/";
+        document.cookie = name + "=" + value  + expires + "; path=/";
     }
 
     function getCookie(name) {
@@ -124,8 +123,11 @@
     }
 
     $(document).ready(function() {
+        $("#loggedUser").html(getCookie('username'));
 
-        
+        <?php if (isset($_GET["expired"]) && $_GET["expired"]){ ?>
+            showErrorMessage('Expiró la sesion, ingrese nuevamente');
+        <?php } ?>
 
         $('#google-login').click(function() {
             window.location.href = '/google-login';
@@ -139,17 +141,17 @@
             
             $.ajax({
                 headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                 },
                 url: '{{route("authenticate")}}', 
                 method: 'POST', 
                 data: { 
                     email: email,
                     password: password,
-                    
                 },
                 success: function(response) {
-                    setCookie(response.token,30);
+                    setCookie('giphyToken',response.token, {{env('TOKEN_EXPIRATION_TIME')}});
+                    setCookie('username', response.username, {{env('TOKEN_EXPIRATION_TIME')}});
                     window.location.href = '/';
                 },
                 error: function(xhr, status, error) {
@@ -163,9 +165,6 @@
         $('#web-logout').click(function() {
             
             $.ajax({
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader('Authorization', 'Bearer {{ $token }}');
-                },
                 url: '{{route("logout")}}', 
                 method: 'POST', 
                 success: function(response) {
@@ -173,9 +172,13 @@
                     window.location.href = '/';
                 },
                 error: function(xhr, status, error) {
+                if (xhr.status == 419){
+                    console.log("Session expirada");
+                    window.location.href = '/?expired=1';
+                }else{
                     var errorMessage = xhr.responseJSON.message || 'Ha ocurrido un error.';
-                    console.error('Error:', errorMessage);
                     showErrorMessage(errorMessage);
+                }
                 }
             });
         });

@@ -11,18 +11,16 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
 
-    private $token;
     public function __construct()
     {
-        $this->middleware('guest')->except([
-            'logout', 'dashboard'
-        ]);
 
     }
 
-    public function home(){
+    public function home(Request $request){
+        $userName = (Auth::user()) ? Auth::user()["name"] : "";
 
-        return view('home' , ['token' => $this->token]); 
+
+        return view('home', ['userName' => $userName]); 
 
     }
 
@@ -38,17 +36,14 @@ class LoginController extends Controller
 
 
         
-        if (Auth::attempt($credentials)) {
-            //guardar el token
+        if (Auth::attempt($credentials, true)) {
 
-            $user = User::where('email', $credentials['email'])
-                        ->where('access_type', 1)
-                        ->first();
-            $token = $user->createToken("giphy", ["*"], Carbon::now()->addMinutes(30));
+            $user = Auth::user();
+            $token = $user->createToken("giphy", ["*"], Carbon::now()->addMinutes(env('TOKEN_EXPIRATION_TIME')));
             $token = $token->plainTextToken;
             
 
-            return response()->json(['message' => 'Autenticacion exitosa', 'token'=> $token], 200);
+            return response()->json(['message' => 'Autenticacion exitosa', 'token'=> $token, 'username' => $user["name"]], 200);
         }else{
             return response()->json(['message' => 'Credenciales incorrectas' ], 401);
         }
@@ -60,9 +55,7 @@ class LoginController extends Controller
     {
         Auth::logout();
         // borrar el token
-        //$this->user->tokens()->delete();
-        
-        return response()->json(['message' => 'Autenticacion exitosa'], 200);
+        return response()->json(['message' => 'Sesion cerrada correctamente'], 200);
     }    
 
 

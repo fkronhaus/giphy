@@ -40,4 +40,4 @@ Linux/MacOs
 docker-compose up
 ```
 
-
+La llave de Giphy está en version developer, por lo que tiene limitaciones de uso.
