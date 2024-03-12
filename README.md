@@ -42,16 +42,15 @@ git clone https://github.com/fkronhaus/giphy
 ```
 cd giphy
 ```
-
-4. Crea la estructura de la base de datos con el siguiente comando:
-````
-php artisan migrate --env=DB_HOST=127.0.0.1 --seed
-````
-
-5. Inicia el contenedor:
+4. Inicia el contenedor:
 ```
 docker-compose up -d
 ```
+
+5. Crea la estructura de la base de datos con el siguiente comando:
+````
+php artisan migrate --env=DB_HOST=127.0.0.1 --seed
+````
 
 6. Ve a tu navegador e ingresa en la url:
 
