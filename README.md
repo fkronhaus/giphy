@@ -49,7 +49,7 @@ docker-compose up -d
 
 5. Crea la estructura de la base de datos con el siguiente comando:
 ````
-php artisan migrate --env=DB_HOST=127.0.0.1 --seed
+php artisan --env=artisan migrate --seed
 ````
 
 6. Ve a tu navegador e ingresa en la url:

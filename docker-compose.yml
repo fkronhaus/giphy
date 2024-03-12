@@ -15,8 +15,6 @@ services:
     image: php:latest
     volumes:
       - .:/var/www/html
-    networks:
-      - my-network
   mysql:
     image: mariadb:latest
     # Uncomment below when on Mac M1
