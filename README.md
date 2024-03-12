@@ -17,8 +17,6 @@ Descripción corta del proyecto y su propósito.
 
 Asegúrate de tener instalado lo siguiente antes de iniciar la configuración del proyecto:
 
-- PHP >= 8.2
-- Composer
 - Docker
 - Git
 
@@ -53,6 +51,9 @@ http://giphyapi.com:8000/
 ![Home](readmeImages/home.png)
 
 Si puedes verla, tienes la aplicacion funcionando!
+
+
+Puedes descargar la coleccion de API de POSTMAN desde [aquí](GiphyAPI.postman_collection.json):
 
 
 ## Casos de Uso

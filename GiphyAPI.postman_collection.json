@@ -1,0 +1,141 @@
+{
+	"info": {
+		"_postman_id": "07862011-9199-4b41-8abf-505ded4841a5",
+		"name": "GiphyAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7708505"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://giphyapi.com:8000/api/authenticate?email=test1@email.com&password=1234",
+					"protocol": "http",
+					"host": [
+						"giphyapi",
+						"com"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"authenticate"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "test1@email.com"
+						},
+						{
+							"key": "password",
+							"value": "1234"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar Gifs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://giphyapi.com:8000/api/giphy/find?searchString=Cats&searchLimit=10&searchOffset=",
+					"protocol": "http",
+					"host": [
+						"giphyapi",
+						"com"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"giphy",
+						"find"
+					],
+					"query": [
+						{
+							"key": "searchString",
+							"value": "Cats"
+						},
+						{
+							"key": "searchLimit",
+							"value": "10"
+						},
+						{
+							"key": "searchOffset",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar Gif por ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://giphyapi.com:8000/api/giphy/info?id=3o72EX5QZ9N9d51dqo",
+					"protocol": "http",
+					"host": [
+						"giphyapi",
+						"com"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"giphy",
+						"info"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "3o72EX5QZ9N9d51dqo"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Guardar Gif Favorito",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://giphyapi.com:8000/api/starred/add?gif_id=3o72EX5QZ9N9d51dqo&alias=Dj+Cats+GIF+by+Product+Hunt&user_id=1",
+					"protocol": "http",
+					"host": [
+						"giphyapi",
+						"com"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"starred",
+						"add"
+					],
+					"query": [
+						{
+							"key": "gif_id",
+							"value": "3o72EX5QZ9N9d51dqo"
+						},
+						{
+							"key": "alias",
+							"value": "Dj+Cats+GIF+by+Product+Hunt"
+						},
+						{
+							"key": "user_id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
