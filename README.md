@@ -37,11 +37,23 @@ git clone https://github.com/fkronhaus/giphy
     127.0.0.1       giphyapi.com
 ```
 
-3. Inicia el Contenedor
+3. Dirígete a la carpeta recien creada:
+
 ```
-docker-compose up
+cd giphy
 ```
-4. Ve a tu navegador e ingresa en la url:
+
+4. Crea la estructura de la base de datos con el siguiente comando:
+````
+php artisan migrate --env=DB_HOST=127.0.0.1 --seed
+````
+
+5. Inicia el contenedor:
+```
+docker-compose up -d
+```
+
+6. Ve a tu navegador e ingresa en la url:
 
 ````
 http://giphyapi.com:8000/
