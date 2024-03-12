@@ -53,7 +53,7 @@
         </div>
     </div>
     
-    <div class="row justify-content-center align-items-center">
+    <div class="d-none row justify-content-center align-items-center">
         <div class="col-3 text-center">
             <hr>
             <button id="google-login" type="button" class="btn btn-primary">Acceder con google</button>
