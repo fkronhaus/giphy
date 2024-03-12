@@ -51,6 +51,10 @@ docker-compose up -d
 ````
 php artisan --env=artisan migrate --seed
 ````
+- Luego de ejecutar el comando, verá la siguiente image:
+![Crear base de datos](readmeImages/createDatabase.jpg)
+    Coloque 'Yes' y presione enter.
+
 
 6. Ve a tu navegador e ingresa en la url:
 

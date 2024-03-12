@@ -12,7 +12,7 @@ services:
     links:
       - php-fpm
   php-fpm:
-    image: php:latest
+    image: bitnami/php-fpm:latest
     volumes:
       - .:/var/www/html
   mysql:
