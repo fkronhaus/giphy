@@ -68,6 +68,9 @@ Si puedes verla, tienes la aplicacion funcionando!
 
 Puedes descargar la coleccion de API de POSTMAN desde [aquí](GiphyAPI.postman_collection.json):
 
+A continuacion el diagrama de Datos utilizado en la aplicacion:
+![Der](readmeImages/der.jpeg)
+
 
 ## Casos de Uso
 
