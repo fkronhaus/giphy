@@ -36,6 +36,18 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        Schema::create('logs', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('user')->nullable();
+            $table->foreign('user')->references('id')->on('users');
+            $table->string('service');
+            $table->text('request_body');
+            $table->string('response_code');
+            $table->longText('response_body');
+            $table->string('source_ip');
+            $table->timestamps();
+        });
+
 
     }
 

@@ -97,6 +97,7 @@
             method: 'GET', 
             data: { 
                 id: id,
+                user_id: $("#loggedUser").attr('user_id')
             },
             success: function(response) {
                 var modal = $('#modal');
@@ -201,7 +202,8 @@
             data: { 
                 searchString: searchString,
                 searchLimit: searchLimit,
-                searchOffset: searchOffset
+                searchOffset: searchOffset,
+                user_id: $("#loggedUser").attr('user_id')
             },
             success: function(response) {
                 

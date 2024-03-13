@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Cookie;
+use App\Models\Log;
 
 
 
@@ -24,32 +24,43 @@ class GiphyController extends Controller
             "limit"=> ($request["searchLimit"]) ? $request["searchLimit"] : null,
             "offset"=> ($request["searchOffset"]) ? $request["searchOffset"] : null,
         ];
-        
-        $result = Http::get($this->endpoint, $params)->body();
-        return $result;
+        $response =  Http::get($this->endpoint, $params)->body();
+
+        $responseCode = 200;
+
+        Log::create( [ 'service' => $request->path(), 'user' => $request["user_id"], 'request_body' => json_encode($request->all()), 'response_code' => $responseCode, 'response_body' => json_encode($response), 'source_ip' => $request->ip(), ] );
+    
+        return response()->json($response, $responseCode);
     }
 
-    public function get($id){
+    public function get(Request $request){
         
         $params = [
             'api_key' => $this->api_key,
-            'gif_id' => $id,
+            'gif_id' => $request["id"],
         ];
         
-        $result = Http::get($this->details_endpoint . '/' . $id , $params)->body();
+        $response = Http::get($this->details_endpoint . '/' . $request["id"] , $params)->body();
 
-        return $result;
+        $responseCode = 200;
+
+        Log::create( [ 'service' => $request->path(), 'user' => $request["user_id"], 'request_body' => json_encode($request->all()), 'response_code' => $responseCode, 'response_body' => json_encode($response), 'source_ip' => $request->ip(), ] );
+    
+        return response()->json($response, $responseCode);
+  
     }
 
     public function info(Request $request) {
-        //dd($request->cookies);
+        
         if (is_null($request->header('giphyToken'))) {
             return response()->redirectTo(route('home', ["expired" => 1]));
         }
-        $response = $this->get($request['id']);
-        $response = json_decode($response,true);
-        return view('giphy.info', ['response' => $response ] );
+        $response = $this->get($request);
         
+        $response = json_decode($response->content(),true);
+        
+        return view('giphy.info', ['message' => '', 'response' => $response ] );
+    
     }
 
     
