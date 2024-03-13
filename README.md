@@ -1,17 +1,15 @@
-# Nombre del Proyecto
+# Giphy API
 
-Descripción corta del proyecto y su propósito.
+Aplicacion de provision de servicios que consumen servicios de Giphy.com
 
 ## Tecnologías Utilizadas
 
 - PHP v8.2
+- Nginx
 - Laravel Framework v10
-- MySQL (o MariaDB)
-- Guzzle HTTP para la integración con la API de Giphy
-- Laravel Passport para la autenticación OAuth2.0
-- PHPUnit para pruebas unitarias
-- UML para la documentación de diseño
-- Docker para la contenerización de la aplicación
+- MariaDB
+- Docker
+- Git
 
 ## Requisitos del Sistema
 
