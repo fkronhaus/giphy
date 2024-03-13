@@ -79,7 +79,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://giphyapi.com:8000/api/giphy/info?id=3o72EX5QZ9N9d51dqo",
+					"raw": "http://giphyapi.com:8000/api/giphy/get?id=3o72EX5QZ9N9d51dqo",
 					"protocol": "http",
 					"host": [
 						"giphyapi",
@@ -89,7 +89,7 @@
 					"path": [
 						"api",
 						"giphy",
-						"info"
+						"get"
 					],
 					"query": [
 						{
