@@ -15,6 +15,7 @@ Aplicacion de provision de servicios que consumen servicios de Giphy.com
 
 Asegúrate de tener instalado lo siguiente antes de iniciar la configuración del proyecto:
 
+- PHP 7.4+
 - Docker
 - Git
 
@@ -41,6 +42,11 @@ git clone https://github.com/fkronhaus/giphy
 cd giphy
 ```
 4. Inicia el contenedor:
+    - IMPORTANTE: Si estas en un entorno Windows edita el archivo docker-compose.yml y comenta la linea 
+    ```
+    platform: linux/arm64/v8
+    ```
+    Luego continúa con el comando:
 ```
 docker-compose up -d
 ```
