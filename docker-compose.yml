@@ -12,13 +12,13 @@ services:
     links:
       - php-fpm
   php-fpm:
-    image: php-fpm:latest
+    image: bitnami/php-fpm:latest
     volumes:
       - .:/var/www/html
   mysql:
     image: mariadb:latest
     # Uncomment below when on Mac M1
-    platform: linux/arm64/v8
+    # platform: linux/arm64/v8
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
